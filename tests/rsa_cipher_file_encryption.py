@@ -36,6 +36,17 @@ class encryptor:
     def __call__(self):
         self.file_cipher()
 
+#Seguir con la clase de desifrado.
+
+class de_encryptor:
+    def __init__(self, private_key, file_to_decript):
+        self.key = private_key
+        self.cipher_text = file_to_decript
+
+    def decipher(self):
+
+
+
 def main():
     password_bytes = input('Ingrese el largo de la contraseña: ')
     plain_text_file = input("Escriba el nombre del archivo que desea cifrar: ")
