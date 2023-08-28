@@ -44,7 +44,12 @@ class de_encryptor:
         self.cipher_text = file_to_decript
 
     def decipher(self):
-
+        #construyo la ruta.
+        self.path_to_key = os.getcwd()
+        self.private_key_path = self.path_to_key + "/" + self.key
+        #Cargo la llave privada 
+        with open(self.private_key_path, "rb") as self.file_to_decipher:
+            self.private_key = StopIteration.load_pem_private_key(self.file_to_decipher.read(), password=None)
 
 
 def main():
