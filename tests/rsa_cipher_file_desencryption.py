@@ -9,12 +9,14 @@ class encryptor:
         self.file = file_to_encrypt
 
     def key_generator(self): 
-        self.new_key = RSA.generate(self.key_lenght)
-        self.public_key_file = open('public_key.pem', 'wb')
+        self.new_key = RSA.generate(self.key_lenght) #Generador de llaves pública y privada.
         #¿Es necesario que el archivo tenga la extención '.PEM'?
+        #Llave pública.
+        self.public_key_file = open('public_key.pem', 'wb')
         self.new_public_key = self.new_key.publickey().export_key('DER')
         self.public_key_file.write(self.new_public_key)
         self.public_key_file.close()
+        #Llave privada.
         self.private_key_file = open('private_key.pem', 'wb')
         self.new_private_key = self.new_key.export_key('DER')
         self.private_key_file.write(self.new_private_key)
@@ -39,17 +41,24 @@ class encryptor:
 #Seguir con la clase de desifrado.
 
 class de_encryptor:
-    def __init__(self, private_key, file_to_decript):
-        self.key = private_key
-        self.cipher_text = file_to_decript
+    def __init__(self, key_file, file_to_decrypt):
+        self.private_key = key_file
+        self.cipher_text = file_to_decrypt
 
     def decipher(self):
-        #construyo la ruta.
+        #Construyo la ruta.
         self.path_to_key = os.getcwd()
-        self.private_key_path = self.path_to_key + "/" + self.key
-        #Cargo la llave privada 
-        with open(self.private_key_path, "rb") as self.file_to_decipher:
-            self.private_key = StopIteration.load_pem_private_key(self.file_to_decipher.read(), password=None)
+        self.private_key_path = self.path_to_key + "/" + self.private_key
+        with open(self.cipher_text, "wb") as self.cf:
+            #Cargo la llave privada 
+            self.private_key = RSA.import_key(open(self.private_key_path, "rb").read(), passphrase=None)
+            self.key = PKCS1_OAEP.new(self.private_key)
+            self.decipher_text = self.key.decrypt(self.cf)
+            self.cf.write(self.decipher_text)
+        
+        #with open(self.private_key_path, "rb") as self.pk:
+            #self.private_key = StopIteration.load_pem_private_key(self.file_to_decipher.read(), password=None)
+            
 
 
 def main():
