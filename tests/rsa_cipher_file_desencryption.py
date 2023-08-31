@@ -55,13 +55,10 @@ class de_encryptor:
             self.key = PKCS1_OAEP.new(self.private_key)
             self.decipher_text = self.key.decrypt(self.cf)
             self.cf.write(self.decipher_text)
-        
-        #with open(self.private_key_path, "rb") as self.pk:
-            #self.private_key = StopIteration.load_pem_private_key(self.file_to_decipher.read(), password=None)
-            
-
+        #PROBAR SI DESCIFRA Y GUARDA EL CONTENIDO DEL ARCHIVO!
 
 def main():
+    #Cambiar variables para el uso del módulo de descifrado.
     password_bytes = input('Ingrese el largo de la contraseña: ')
     plain_text_file = input("Escriba el nombre del archivo que desea cifrar: ")
     new_encripted_file = encryptor(password_bytes, plain_text_file)
