@@ -21,17 +21,50 @@ class encryptor:
         self.private_key_file.close()
         print(f"\n== Llaves generadas ==\n")
         return self.new_key
-     
+
     def file_cipher(self):
         self.folder_path = os.getcwd()
         self.file_path = self.folder_path + "/" + self.file #Completar la ruta del archivo.
-        with open(self.file_path, "wb") as self.f:   #Abrir el archivo y encriptarlo con las llaves generadas.
-            self.key_to_encrypt = self.key_generator()
-            self.cipher = PKCS1_OAEP.new(self.key_to_encrypt.publickey())
-            self.text_to_cipher = self.cipher.encrypt(self.file.encode())
-            self.f.write(self.text_to_cipher)
+        self.f = open(self.file_path).read() 
+        self.data_to_encrypt = self.f.encode("utf-8")  #Codificación UTF-8 del los datos del archivo.         
+        self.key_to_encrypt = self.key_generator() 
+        self.cipher = PKCS1_OAEP.new(self.key_to_encrypt.publickey())
+        self.encrypted_data = self.cipher.encrypt(self.data_to_encrypt)
+        with open(self.file_path, "wb") as self.f:
+            self.f.write(self.encrypted_data)
             self.f.close()
+            
         return print(f"\n=== Archivo cifrado en {self.folder_path} ===\n")
+
+    # def file_cipher(self):
+    #     self.folder_path = os.getcwd()
+    #     self.file_path = self.folder_path + "/" + self.file #Completar la ruta del archivo.
+    #     with open(self.file_path, "rb") as self.f:   #Abrir el archivo y encriptarlo con las llaves generadas.
+    #         self.read_data = self.f.read() #Lecturad del archivo
+    #         self.encoded_data = self.read_data.encode("utf-8")  #Codificación UTF-8 del los datos del archivo.         
+    #         self.key_to_encrypt = self.key_generator() #Llamo al generador de llaves
+    #         self.cipher = PKCS1_OAEP.new(self.key_to_encrypt.publickey())
+    #         #Los datos a cifrar deben estar codificados en formato UTF-8 antes de encriptarlos. 
+    #         self.text_to_cipher = self.cipher.encrypt(self.encoded_data)
+    #         self.f.close()
+    #     with open(self.file_path, "wb") as self.f:
+    #         self.f.write(self.text_to_cipher)
+    #         self.f.close()
+            
+    #     return print(f"\n=== Archivo cifrado en {self.folder_path} ===\n")
+
+    # def file_cipher(self):
+    #     self.folder_path = os.getcwd()
+    #     self.file_path = self.folder_path + "/" + self.file #Completar la ruta del archivo.
+    #     with open(self.file_path, "wb") as self.f:   #Abrir el archivo y encriptarlo con las llaves generadas.
+    #         self.key_to_encrypt = self.key_generator()
+    #         self.cipher = PKCS1_OAEP.new(self.key_to_encrypt.publickey())
+    #         # Los datos a cifrar deben estar codificados en formato UTF-8 antes de encriptarlos.
+    #         self.encoded_data = self.f.read().encode("utf-8")
+    #         self.text_to_cipher = self.cipher.encrypt(self.encoded_data.encode("utf-8"))
+    #         self.f.write(self.text_to_cipher)
+    #         self.f.close()
+    #     return print(f"\n=== Archivo cifrado en {self.folder_path} ===\n")
 
     def __call__(self):
         self.file_cipher()
