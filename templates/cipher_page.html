@@ -1,0 +1,55 @@
+{% extends './layout.html' %} 
+{% block title %}Encryptor{% endblock %}
+{% block body %} 
+
+<div class="main_conteiner">
+    <form id="cipher_form" action="/cipher_page" method="POST">
+        <ul>
+            <li><label> Ruta al archivo </label></li>
+            <li><input class="form_input" name="file_path" type="file"></li>
+            <li><label> ¿Bytes de cifrado? </label></li>
+            <li><input name="bytes_long" min="2048" type="number"></li>
+        </ul>
+        <div class="btn_conteiner">
+            <input id="btn1"  class="submit_button" type="submit" value="Cifrar">
+            <a href="/" type="button" class="button"> Volver </a>           
+        </div>
+    </form>
+</div>
+
+{% with initial_message = get_flashed_messages(category_filter=["welcome"]) %}
+    {% if initial_message %}
+    <dialog id="welcome_msg">
+        {% for msg in initial_message %}
+            <p> {{ msg }}</p>
+        {% endfor %}
+        <input type="button" value="cerrar" onclick="this.parentElement.close()">
+    </dialog>
+    {% endif %}
+{% endwith %}
+
+{% with succesful_message = get_flashed_messages() %}
+    {% if succesful_message %}
+    <dialog id="post_message">
+        {% for post_msg in succesful_message %}
+            <p> {{ post_msg }}</p>
+        {% endfor %}
+        <input type="button" value="cerrar" onclick="this.parentElement.close()">
+    {% endif %}
+    </dialog>
+{% endwith %}
+
+<script>
+    document.getElementsByClassName("main_conteiner").onload = welcomeLoad();
+    document.getElementById("cipher_form").addEventListener("submit", finish_message);
+    let welcomePopUp = false;
+
+    function welcomeLoad(){
+        document.getElementById("welcome_msg").show();
+    }
+    function finish_message() {
+        document.getElemnetById("post_message").show();
+    }
+</script>
+
+{% endblock %} 
