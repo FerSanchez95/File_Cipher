@@ -17,7 +17,7 @@
     </form>
 </div>
 
-{% with initial_message = get_flashed_messages(category_filter=["welcome"]) %}
+{% with initial_message = get_flashed_messages() %}
     {% if initial_message %}
     <dialog id="welcome_msg">
         {% for msg in initial_message %}
