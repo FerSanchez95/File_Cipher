@@ -1,4 +1,4 @@
-'''Main. Here is maion program that execute the behaviour of the page and calls
+'''Main. Here is main program that execute the behaviour of the page and calls
    for the other modules.'''
 import os
 from flask import Flask, request, flash
@@ -10,6 +10,7 @@ import modules.path_to_file_contruct as constructor
 
 
 app = Flask(__name__)
+#Secret key is just to get flask working.
 app.secret_key = b'=$%$)JrwerweTW)#"fdosejr=(3)'
 
 @app.route("/", methods = ["GET", "POST"])
